@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zip_extractor/components/file_pick.dart';
 import 'package:zip_extractor/getX/navigation.dart';
 
 class Home extends StatelessWidget {
@@ -6,14 +7,12 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        body : Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text("Home"),
-                TextButton(onPressed: toResultPage, child: Text("toResult"))
-              ],
-            )
+        body : Column(
+          children: [
+            Text("Home"),
+            TextButton(onPressed: filePick, child: Text("filePick")),
+            TextButton(onPressed: toResultPage, child: Text("toResult"))
+          ],
         )
     );
   }

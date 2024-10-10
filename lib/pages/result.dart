@@ -8,14 +8,12 @@ class Result extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        body : Center(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text("Home"),
-                TextButton(onPressed: toHomePage, child: Text("toHome"))
-              ],
-            )
+        body : Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text("Home"),
+            TextButton(onPressed: toHomePage, child: Text("toHome"))
+          ],
         )
     );
   }
