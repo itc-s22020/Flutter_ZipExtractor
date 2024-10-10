@@ -11,7 +11,7 @@ void main() {
   ]);
 
   runApp(const GetMaterialApp(
-    title: 'PolyGraphy',
+    title: 'ZipExtractor',
     initialRoute: '/',
     home: Home(),
   ));

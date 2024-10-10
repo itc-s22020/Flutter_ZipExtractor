@@ -14,6 +14,7 @@ Future<void> filePick() async {
 
   if (result != null) {
     c.setFile(result.files.first.bytes ?? Uint8List(0));
+    c.setName(result.files.first.name);
   } else {
     return;
   }
