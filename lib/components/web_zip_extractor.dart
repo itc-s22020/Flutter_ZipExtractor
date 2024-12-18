@@ -1,26 +1,23 @@
-import 'dart:html';
 import 'dart:typed_data';
 import 'package:archive/archive.dart';
-
+import 'package:get/get.dart';
+import '../getX/zip_controller.dart';
 
 class WebZipExtractor {
   static const List<int> zipSignature = [0x50, 0x4B, 0x03, 0x04];
 
-  Future<Map<String, Uint8List>> extractZip(File file) async {
-    final reader = FileReader();
-    reader.readAsArrayBuffer(file);
+  Future<Map<String, Uint8List>> extractZip(Uint8List zipData) async {
+    ZipController c = Get.put(ZipController());
 
-    await reader.onLoad.first;
-
-    final bytes = Uint8List.fromList(reader.result as List<int>);
-
-    final zipStart = findZipStart(bytes);
+    final zipStart = findZipStart(zipData);
     if (zipStart == -1) {
       throw Exception('ZIP signature not found');
     }
 
-    final archive = ZipDecoder().decodeBytes(bytes.sublist(zipStart));
+    final zipPart = zipData.sublist(zipStart);
+    c.setZip(zipPart);
 
+    final archive = ZipDecoder().decodeBytes(zipPart);
     final extractedFiles = <String, Uint8List>{};
 
     for (final file in archive) {
@@ -30,6 +27,8 @@ class WebZipExtractor {
         extractedFiles[filename] = Uint8List.fromList(data);
       }
     }
+
+    c.setZipFiles(extractedFiles);
 
     return extractedFiles;
   }
@@ -46,4 +45,3 @@ class WebZipExtractor {
     return -1;
   }
 }
-

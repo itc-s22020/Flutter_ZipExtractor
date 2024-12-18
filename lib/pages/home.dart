@@ -33,11 +33,19 @@ class Home extends StatelessWidget {
                             'Please select a file',
                             style: TextStyle(fontSize: 18),
                           ),
-                        if (fileC.file.value.isNotEmpty)
+                        if (fileC.file.value.isNotEmpty) ...[
                           Text(
                             fileC.name.value,
                             style: const TextStyle(fontSize: 18),
                           ),
+                          const SizedBox(height: 16),
+                          if (_isImageFile(fileC.name.value))
+                            Image.memory(
+                              fileC.file.value,
+                              height: 200,
+                              fit: BoxFit.cover,
+                            ),
+                        ],
                         const SizedBox(height: 16),
                         ElevatedButton.icon(
                           icon: const Icon(Icons.file_upload, color: Colors.white),
@@ -62,7 +70,7 @@ class Home extends StatelessWidget {
             const SizedBox(height: 16),
             Obx(() => ElevatedButton.icon(
               icon: const Icon(Icons.navigate_next, color: Colors.white),
-              label: const Text("Next Page"),
+              label: const Text("Extract"),
               onPressed: fileC.file.value.isEmpty ? null : toResultPage,
               style: ElevatedButton.styleFrom(
                 foregroundColor: Colors.white,
@@ -77,4 +85,11 @@ class Home extends StatelessWidget {
       ),
     );
   }
+
+  bool _isImageFile(String fileName) {
+    final imageExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+    final extension = fileName.split('.').last.toLowerCase();
+    return imageExtensions.contains(extension);
+  }
 }
+
